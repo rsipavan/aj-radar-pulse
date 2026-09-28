@@ -231,6 +231,9 @@ main.wrap{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;
 /* -------------------------------------------------------------------- hero */
 .hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;
   padding:calc(var(--nav-h) + 54px) 0 76px;position:relative}
+.heroGrid{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(340px,.92fr);
+  gap:clamp(38px,6vw,82px);align-items:center}
+.heroCopy{min-width:0}
 .heroTop{display:flex;align-items:center;gap:18px;margin-bottom:8px}
 .heroLogo{width:clamp(72px,11vw,104px);height:auto;border-radius:50%;
   box-shadow:0 0 0 1px rgba(255,255,255,.12),0 20px 60px -22px var(--glow);
@@ -270,6 +273,65 @@ h1 .sh{background:linear-gradient(102deg,var(--brand2) 0%,var(--brand3) 34%,var(
 .btn.g:hover{border-color:var(--lime);color:var(--lime2);background:rgba(192,224,32,.06);
   transform:translateY(-2px)}
 .btn:active{transform:translateY(0) scale(.985)}
+
+/* ------------------------------------------------------------ live radar */
+.radarStage{position:relative;width:100%;max-width:490px;aspect-ratio:1;justify-self:end;
+  isolation:isolate;filter:drop-shadow(0 28px 56px rgba(0,0,0,.34))}
+.radarStage.rv.in{transition-delay:.18s}
+.radarField{position:absolute;inset:6%;overflow:hidden;border-radius:50%;
+  border:1px solid rgba(212,92,190,.3);
+  background:
+    radial-gradient(circle at 50% 50%,rgba(168,36,143,.18),transparent 32%),
+    repeating-radial-gradient(circle at 50% 50%,transparent 0 19%,rgba(255,255,255,.08) 19.4% 19.8%,transparent 20.2% 25%),
+    #0c0911;
+  box-shadow:inset 0 0 70px rgba(168,36,143,.12),0 0 0 1px rgba(255,255,255,.025)}
+.radarField::before{content:'';position:absolute;inset:0;opacity:.42;
+  background:linear-gradient(transparent 49.7%,rgba(212,92,190,.28) 50%,transparent 50.3%),
+    linear-gradient(90deg,transparent 49.7%,rgba(212,92,190,.28) 50%,transparent 50.3%)}
+.radarField::after{content:'';position:absolute;inset:8%;border-radius:50%;
+  border:1px dashed rgba(192,224,32,.18)}
+.radarSweep{position:absolute;inset:-2%;border-radius:50%;transform-origin:center;
+  background:conic-gradient(from -34deg,transparent 0 82%,rgba(192,224,32,.04) 86%,rgba(192,224,32,.52) 91%,transparent 92% 100%);
+  animation:radarSweep 7.8s linear infinite;animation-play-state:paused;mix-blend-mode:screen}
+.radarStage.in .radarSweep,.radarStage.in .radarPing::after,.radarStage.in .radarTag{
+  animation-play-state:running}
+@keyframes radarSweep{to{transform:rotate(1turn)}}
+.radarCore{position:absolute;left:50%;top:50%;z-index:4;transform:translate(-50%,-50%);
+  width:112px;height:112px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(8,6,12,.88);border:1px solid rgba(255,255,255,.14);
+  box-shadow:0 0 0 10px rgba(168,36,143,.08),0 0 42px rgba(168,36,143,.28)}
+.radarCore img{width:66px;height:66px;border-radius:50%}
+.radarCore small{position:absolute;top:calc(100% + 12px);white-space:nowrap;
+  font-size:9px;font-weight:700;letter-spacing:.22em;color:var(--lime2)}
+.radarPing{position:absolute;z-index:3;width:10px;height:10px;border-radius:50%;
+  background:var(--brand2);box-shadow:0 0 14px 2px rgba(212,92,190,.44)}
+.radarPing::after{content:'';position:absolute;inset:-7px;border:1px solid currentColor;
+  border-radius:50%;animation:radarPing 2.6s var(--ease-out) infinite;
+  animation-play-state:paused;color:var(--brand2)}
+.radarPing.lime{background:var(--lime);box-shadow:0 0 14px 2px rgba(192,224,32,.38)}
+.radarPing.lime::after{color:var(--lime)}
+.radarPing.warm{background:var(--warm);box-shadow:0 0 14px 2px rgba(232,163,61,.34)}
+.radarPing.warm::after{color:var(--warm)}
+.radarPing.p1{left:67%;top:22%}.radarPing.p2{left:26%;top:39%}
+.radarPing.p3{left:72%;top:68%}.radarPing.p4{left:39%;top:76%}
+.radarPing.p5{left:81%;top:45%}
+.radarPing.p2::after{animation-delay:.4s}.radarPing.p3::after{animation-delay:.8s}
+.radarPing.p4::after{animation-delay:1.2s}.radarPing.p5::after{animation-delay:1.6s}
+@keyframes radarPing{0%{opacity:.9;transform:scale(.35)}70%,100%{opacity:0;transform:scale(1.5)}}
+.radarTag{position:absolute;z-index:5;display:flex;align-items:center;gap:8px;
+  padding:9px 12px;border-radius:10px;border:1px solid var(--line2);
+  background:rgba(13,9,18,.88);box-shadow:0 12px 30px rgba(0,0,0,.28);
+  color:var(--ink2);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  animation:radarFloat 4.6s var(--ease) infinite alternate;animation-play-state:paused}
+.radarTag b{color:var(--lime2);font-size:9px;letter-spacing:.12em}
+.radarTag.t1{right:0;top:16%}.radarTag.t2{left:0;bottom:22%;animation-delay:-1.7s}
+.radarTag.t3{right:3%;bottom:8%;animation-delay:-3.1s}
+@keyframes radarFloat{to{transform:translateY(-7px)}}
+.radarReadout{position:absolute;left:3%;top:8%;z-index:5;padding-left:12px;
+  border-left:2px solid var(--brand2);font-size:10px;color:var(--muted);
+  letter-spacing:.1em;text-transform:uppercase}
+.radarReadout strong{display:block;margin-top:4px;color:var(--ink);font-size:20px;
+  line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em;text-transform:none}
 
 /* ------------------------------------------------------------------- stats */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:48px;
@@ -465,6 +527,17 @@ footer .scanbox .v{color:var(--ink2)}
   .mobileNav{display:block}
   .scanpill{margin-left:auto}
   .grid{grid-template-columns:repeat(auto-fill,minmax(290px,1fr))}
+  .heroGrid{grid-template-columns:1fr}
+  .radarStage{justify-self:center;max-width:390px;margin-top:36px}
+  .hlGrid{grid-template-columns:1fr}
+}
+@media(min-width:901px){
+  .hlGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .hl:first-child{grid-column:1/-1;padding:28px}
+  .hl:first-child .hlRank{width:58px;height:58px;font-size:23px}
+  .hl:first-child .hlBrand{font-size:22px}
+  .hl:first-child .hlScore b{font-size:30px}
+  .hl:first-child .hlOpp{font-size:14px;margin-top:6px}
 }
 @media(max-width:680px){
   :root{--nav-h:56px}
@@ -481,6 +554,12 @@ footer .scanbox .v{color:var(--ink2)}
   body{padding-bottom:calc(var(--tab-h) + var(--safe-b))}
   .hero{padding:calc(var(--nav-h) + 30px) 0 46px;min-height:auto}
   .heroTop{gap:13px}
+  .radarStage{max-width:300px;margin-top:30px}
+  .radarTag{padding:7px 9px;font-size:8.5px}
+  .radarTag.t3{display:none}
+  .radarReadout{left:0;top:5%}
+  .radarCore{width:88px;height:88px}
+  .radarCore img{width:52px;height:52px}
   h1{max-width:100%;margin-top:18px}
   .lede{margin-top:16px}
   .assist{margin-top:18px;padding:12px 14px}
@@ -565,22 +644,39 @@ footer .scanbox .v{color:var(--ink2)}
 <main class="wrap" id="top">
 
   <header class="hero">
-    <div class="heroTop rv">
-      <img class="heroLogo" src="assets/logo.png" alt="AJ Events">
-      <div class="eyebrow"><span class="pulse" aria-hidden="true"></span><span id="eyebrow">Radar Pulse</span></div>
-    </div>
-    <h1 class="rv">Every opening, <span class="sh">before it is announced.</span></h1>
-    <p class="lede rv" id="lede">Store launches, showroom openings, mall events and public
-      gatherings across the Telugu states — detected from permissions, filings and listings
-      ahead of the press.</p>
-    <div class="assist rv rvL">
-      <span class="dot" aria-hidden="true"></span>
-      <p id="assistLine">I'm your AI assistant. I rescan every source on a schedule and rank what
-        needs your call first — so nothing is missed and nothing is late.</p>
-    </div>
-    <div class="cta rv">
-      <a class="btn p" href="#highlights">See highlights <span aria-hidden="true">&rarr;</span></a>
-      <a class="btn g" href="#all">All openings</a>
+    <div class="heroGrid">
+      <div class="heroCopy">
+        <div class="heroTop rv">
+          <img class="heroLogo" src="assets/logo.png" alt="AJ Events">
+          <div class="eyebrow"><span class="pulse" aria-hidden="true"></span><span id="eyebrow">Radar Pulse</span></div>
+        </div>
+        <h1 class="rv">Every opening, <span class="sh">before it is announced.</span></h1>
+        <p class="lede rv" id="lede">Store launches, showroom openings, mall events and public
+          gatherings across the Telugu states — detected from permissions, filings and listings
+          ahead of the press.</p>
+        <div class="assist rv rvL">
+          <span class="dot" aria-hidden="true"></span>
+          <p id="assistLine">I'm your AI assistant. I rescan every source on a schedule and rank what
+            needs your call first — so nothing is missed and nothing is late.</p>
+        </div>
+        <div class="cta rv">
+          <a class="btn p" href="#highlights">See highlights <span aria-hidden="true">&rarr;</span></a>
+          <a class="btn g" href="#all">All openings</a>
+        </div>
+      </div>
+      <div class="radarStage rv rvS" aria-hidden="true">
+        <div class="radarReadout"><span>Signals ranked</span><strong><span id="radarTotal" data-count="0">0</span> live</strong></div>
+        <div class="radarField">
+          <span class="radarSweep"></span>
+          <span class="radarPing p1 lime"></span><span class="radarPing p2"></span>
+          <span class="radarPing p3 warm"></span><span class="radarPing p4 lime"></span>
+          <span class="radarPing p5"></span>
+          <div class="radarCore"><img src="assets/logo.png" alt=""><small>LIVE RADAR</small></div>
+        </div>
+        <div class="radarTag t1">Hyderabad <b>HOT</b></div>
+        <div class="radarTag t2">Jewellery <b><span id="radarJewellery" data-count="0">0</span> signals</b></div>
+        <div class="radarTag t3">Andhra Pradesh <b>tracking</b></div>
+      </div>
     </div>
     <div class="stats rv" role="list" aria-label="Opportunity statistics">
       <div class="s brand" role="listitem"><div class="n" data-count="0" id="s1">0</div><div class="l">Opportunities</div></div>
@@ -1082,8 +1178,10 @@ function finishSplash(){
     el.classList.add('gone');
     document.body.classList.remove('locked');
     try { sessionStorage.setItem('rp-splash','1'); } catch(e){}
-    setTimeout(() => el.remove(), 760);
-    finishSplash();
+    setTimeout(() => {
+      el.remove();
+      finishSplash();
+    }, reduce ? 0 : 760);
   };
 
   if (seen){
@@ -1111,6 +1209,8 @@ if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0){
 fetch('data.json', { cache:'no-store' }).then(r => r.json()).then(d => {
   state.all = d.events || [];
   state.meta = d.scan || null;
+  document.getElementById('radarTotal').dataset.count = state.all.length;
+  document.getElementById('radarJewellery').dataset.count = state.all.filter(e => e.category === 'Jewellery').length;
 
   const org = d.org || {};
   if (org.name){

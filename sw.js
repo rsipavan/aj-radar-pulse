@@ -4,7 +4,7 @@
      · everything else -> cache-first, then network, then cache the result
    Bump CACHE when the shell changes so old copies are dropped on activate.
 */
-const CACHE = 'radar-pulse-v2';
+const CACHE = 'radar-pulse-v3';
 
 const SHELL = [
   './',
