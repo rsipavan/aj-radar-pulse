@@ -1,10 +1,11 @@
 /* AJ Radar Pulse — service worker
    Strategy:
+     · navigation     -> network-first, fall back to cached shell
      · data.json      -> network-first, fall back to cache (never serve stale leads silently)
-     · everything else -> cache-first, then network, then cache the result
+     · static assets  -> cache-first, then network, then cache the result
    Bump CACHE when the shell changes so old copies are dropped on activate.
 */
-const CACHE = 'radar-pulse-v4';
+const CACHE = 'radar-pulse-v5';
 
 const SHELL = [
   './',
@@ -38,6 +39,22 @@ self.addEventListener('fetch', e => {
   let url;
   try { url = new URL(req.url); } catch (err) { return; }
   if (url.origin !== location.origin) return;
+
+  /* pages — prefer the current shell so releases do not remain hidden behind an old cache */
+  if (req.mode === 'navigate') {
+    e.respondWith(
+      fetch(req)
+        .then(res => {
+          if (res && res.status === 200) {
+            const copy = res.clone();
+            caches.open(CACHE).then(c => c.put('./index.html', copy)).catch(() => {});
+          }
+          return res;
+        })
+        .catch(() => caches.match(req).then(hit => hit || caches.match('./index.html')))
+    );
+    return;
+  }
 
   /* data.json — always try the network first so the app is never stuck on old leads */
   if (url.pathname.endsWith('/data.json')) {

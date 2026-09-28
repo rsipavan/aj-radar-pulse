@@ -1,9 +1,11 @@
 {
  "generated": "2026-09-28 17:47 UTC",
  "scan": {
-  "runAtUtc": "2026-09-28T17:47:35Z",
-  "runAtIst": "28 Sep 2026, 23:17 IST",
+  "runAtUtc": "2026-09-28T08:30:00Z",
+  "runAtIst": "28 Sep 2026, around 2 PM IST",
   "runOnIst": "28 Sep 2026",
+  "note": "28 Sep 2026, around 2 PM IST",
+  "noteShort": "28 Sep · ~2 PM",
   "sources": 30,
   "signals": 51,
   "schedule": "weekly, Monday 09:00 IST"
@@ -12,8 +14,8 @@
   "name": "AJ Events",
   "instagram": "@aryanajevents",
   "tagline": "PR management · model management · event organisation · fashion PR media",
-  "about": "Runs store-launch events for jewellery, silks and fashion brands across the\nTelugu states — booking a Tollywood celebrity to inaugurate, supplying models, and producing the\nPR coverage and reels.",
-  "focus": "Focus: Telangana and Andhra Pradesh",
+  "about": "We scan thousands of signals across the web, connect fragmented information, and identify events as they emerge.",
+  "focus": "AJ Event Intelligence",
   "owner": "Aryan"
  },
  "vocabulary": {
