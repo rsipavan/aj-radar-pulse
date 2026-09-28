@@ -1121,7 +1121,10 @@ fetch('data.json', { cache:'no-store' }).then(r => r.json()).then(d => {
   if (org.about) document.getElementById('lede').textContent = org.about;
   if (org.focus) document.getElementById('eyebrow').textContent = org.focus;
   if (org.tagline) document.getElementById('fTag').textContent = org.tagline;
-  if (org.owner) document.getElementById('splashHi').textContent = 'Welcome, ' + org.owner;
+  if (org.owner){
+    const splashHi = document.getElementById('splashHi');
+    if (splashHi) splashHi.textContent = 'Welcome, ' + org.owner;
+  }
 
   const dated = state.all.filter(e => e.daysOut !== null && e.daysOut >= 0).length;
   const pri = (d.vocabulary && d.vocabulary.priorities) ? d.vocabulary.priorities[0] : 'HOT';
