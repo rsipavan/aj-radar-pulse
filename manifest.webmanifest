@@ -1,0 +1,19 @@
+{
+  "name": "AJ Radar Pulse",
+  "short_name": "Radar Pulse",
+  "description": "Every store, showroom, mall and event opening across Telangana and Andhra Pradesh — detected before it is announced.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "background_color": "#08060c",
+  "theme_color": "#0a0710",
+  "lang": "en",
+  "categories": ["business", "productivity"],
+  "icons": [
+    { "src": "assets/logo-180.png", "sizes": "180x180", "type": "image/png", "purpose": "any" },
+    { "src": "assets/logo.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/logo.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
