@@ -5,7 +5,7 @@
      · static assets  -> cache-first, then network, then cache the result
    Bump CACHE when the shell changes so old copies are dropped on activate.
 */
-const CACHE = 'radar-pulse-v5';
+const CACHE = 'radar-pulse-v6';
 
 const SHELL = [
   './',

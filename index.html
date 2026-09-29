@@ -253,7 +253,7 @@ main.wrap{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;
 .hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;
   padding:calc(var(--nav-h) + 54px) 0 76px;position:relative}
 .heroGrid{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(340px,.92fr);
-  gap:clamp(38px,6vw,82px);align-items:center}
+  gap:clamp(38px,6vw,82px);align-items:center;position:relative}
 .heroCopy{min-width:0}
 .heroTop{display:flex;align-items:center;gap:18px;margin-bottom:8px}
 .brandBeacon{position:relative;width:clamp(92px,12vw,122px);aspect-ratio:1;display:grid;
@@ -294,6 +294,13 @@ h1 .sh{background:linear-gradient(102deg,var(--brand2) 0%,var(--brand3) 58%,#fff
 .learningLoop{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px;
   color:var(--brand3);font-size:9px;font-weight:720;letter-spacing:.12em;text-transform:uppercase}
 .learningLoop span+span::before{content:'\2192';margin-right:8px;color:var(--lime2)}
+.motionBtn{position:absolute;right:0;top:13%;z-index:9;display:inline-flex;align-items:center;gap:8px;padding:8px 12px;
+  border:1px solid rgba(189,58,168,.38);border-radius:100px;background:rgba(144,32,128,.12);
+  color:var(--brand3);font:inherit;font-size:10px;font-weight:650;line-height:1.3;
+  letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.motionBtn::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--brand3);
+  box-shadow:0 0 9px var(--brand2)}
+.motionBtn:focus-visible{outline:2px solid var(--brand3);outline-offset:3px}
 .cta{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
 .btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:9px;
   padding:14px 26px;border-radius:100px;font-size:14px;font-weight:620;
@@ -322,8 +329,8 @@ h1 .sh{background:linear-gradient(102deg,var(--brand2) 0%,var(--brand3) 58%,#fff
   border-radius:50%;background:radial-gradient(ellipse,rgba(189,58,168,.22),rgba(8,6,10,.62) 55%,transparent 72%);
   filter:blur(13px);transform:rotateX(68deg) translateZ(-54px);animation:holoFloor 4.8s ease-in-out infinite alternate}
 .radarStage.rv.in{transition-delay:.18s}
-@media(min-width:901px) and (prefers-reduced-motion:no-preference){
-  .radarStage.in{animation:radarFloat3d 6.8s ease-in-out infinite alternate}
+@media(min-width:901px){
+  body.motionOn .radarStage.in{animation:radarFloat3d 6.8s ease-in-out infinite alternate}
 }
 @keyframes radarFloat3d{
   from{transform:perspective(1100px) rotateX(5deg) rotateY(-7deg) translateY(3px)}
@@ -356,11 +363,17 @@ h1 .sh{background:linear-gradient(102deg,var(--brand2) 0%,var(--brand3) 58%,#fff
 .brainScan{position:absolute;inset:12%;z-index:3;transform-style:preserve-3d;perspective:540px;
   animation:brainYaw 9s ease-in-out infinite;animation-play-state:paused}
 .brainScan::before{content:'';position:absolute;inset:12% 15%;border-radius:46% 54% 48% 52% / 42% 45% 55% 58%;
-  background:radial-gradient(circle at 37% 38%,rgba(232,180,223,.18),transparent 10%),
-    radial-gradient(ellipse at 50% 50%,rgba(144,32,128,.18),rgba(8,6,10,.45) 58%,transparent 72%);
+  background:radial-gradient(circle at 34% 27%,rgba(255,255,255,.15),transparent 12%),
+    radial-gradient(circle at 34% 34%,rgba(189,58,168,.25),rgba(30,11,35,.22) 36%,rgba(5,3,9,.82) 74%);
   border:1px solid rgba(232,180,223,.12);box-shadow:inset 0 0 32px rgba(189,58,168,.14),
     0 0 32px rgba(144,32,128,.16);transform:translateZ(-26px);animation:brainGlow 3.8s ease-in-out infinite;
   animation-play-state:paused}
+.depthArc{--angle:0deg;position:absolute;inset:12% 15%;border:1px solid rgba(232,180,223,.23);
+  border-radius:50%;box-shadow:0 0 10px rgba(189,58,168,.17);transform:rotateY(var(--angle)) translateZ(-4px);
+  animation:depthArcTilt 6.8s ease-in-out infinite alternate;animation-play-state:paused}
+.depthArc.a1{--angle:-68deg;animation-delay:-1s}
+.depthArc.a2{--angle:0deg;opacity:.45;animation-delay:-2.8s}
+.depthArc.a3{--angle:68deg;animation-delay:-4.2s}
 .brainScan::after{content:'';position:absolute;z-index:6;inset:10% 18% 48% 22%;border-radius:50%;
   background:radial-gradient(ellipse at 42% 54%,rgba(255,255,255,.2),rgba(232,180,223,.08) 34%,transparent 68%);
   filter:blur(5px);mix-blend-mode:screen;transform:translateZ(72px) rotate(-11deg);
@@ -422,9 +435,15 @@ h1 .sh{background:linear-gradient(102deg,var(--brand2) 0%,var(--brand3) 58%,#fff
   animation:orbitTwo 10s linear infinite reverse}
 .neuralOrbit.o3{inset:30%;transform:rotateX(58deg) rotateY(52deg);animation:orbitThree 7s linear infinite}
 .neuralOrbit.o1,.neuralOrbit.o2,.neuralOrbit.o3{animation-play-state:paused}
+.neuralOrbit::after{content:'';position:absolute;left:50%;top:-5px;width:9px;height:9px;
+  border-radius:50%;background:#fff;box-shadow:0 0 8px 3px var(--brand3),0 0 22px var(--brand2);
+  transform:translateZ(48px)}
+.neuralOrbit.o2::after{width:7px;height:7px;background:var(--lime);
+  box-shadow:0 0 8px 3px var(--lime),0 0 22px var(--lime)}
+.neuralOrbit.o3::after{width:6px;height:6px;background:var(--brand3)}
 .radarStage.in .radarField,.radarStage.in .radarSweep,.radarStage.in .radarPing::after,.radarStage.in .radarTag,
 .radarStage.in .brainScan,.radarStage.in .brainScan::before,.radarStage.in .brainScan::after,
-.radarStage.in .brainSlice,.radarStage.in .neuralMesh,
+.radarStage.in .brainSlice,.radarStage.in .depthArc,.radarStage.in .neuralMesh,
 .radarStage.in .brainPlane,.radarStage.in .neuralOrbit,.radarStage.in .neuralMesh .brainHull,
 .radarStage.in .neuralMesh .neuralPath,.radarStage.in .neuralMesh .neuralNode,
 .radarStage.in .signalLexicon span,.radarStage.in .locationStream span,.radarStage.in .analysisState span{
@@ -434,6 +453,7 @@ h1 .sh{background:linear-gradient(102deg,var(--brand2) 0%,var(--brand3) 58%,#fff
   50%{border-color:rgba(189,58,168,.52);box-shadow:inset 0 0 88px rgba(144,32,128,.22),0 0 30px rgba(144,32,128,.12)}
 }
 @keyframes brainYaw{0%,100%{transform:rotateY(-17deg) rotateX(5deg)}50%{transform:rotateY(17deg) rotateX(-4deg)}}
+@keyframes depthArcTilt{to{transform:rotateY(calc(var(--angle) + 24deg)) translateZ(14px)}}
 @keyframes brainGlow{50%{opacity:.72;filter:brightness(1.35)}}
 @keyframes surfaceGlint{to{opacity:.32;transform:translate3d(22px,12px,82px) rotate(5deg) scale(.82)}}
 @keyframes meshDepth{
@@ -442,7 +462,7 @@ h1 .sh{background:linear-gradient(102deg,var(--brand2) 0%,var(--brand3) 58%,#fff
 }
 @keyframes brainSlicePulse{
   0%,100%{opacity:.24;transform:translate(-50%,-50%) rotateX(68deg) translateZ(var(--z)) scale(.96)}
-  50%{opacity:.92;transform:translate(-50%,-50%) rotateX(68deg) translateZ(var(--z)) scale(1.035)}
+  50%{opacity:.92;transform:translate(-50%,-50%) rotateX(68deg) translateZ(calc(var(--z) + 12px)) scale(1.035)}
 }
 @keyframes brainPlane{from{top:18%;opacity:.48}to{top:80%;opacity:1}}
 @keyframes orbitOne{to{transform:rotateX(64deg) rotateZ(372deg)}}
@@ -702,18 +722,25 @@ section{padding:76px 0;scroll-margin-top:calc(var(--nav-h) + 10px)}
 .rvS{transform:scale(.94) translateY(14px)}
 .card.rv.in,.hl.rv.in{transition-delay:var(--d,0ms)}
 @media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;
+  body:not(.motionOn) *,body:not(.motionOn) *::before,body:not(.motionOn) *::after{animation-duration:.001ms!important;animation-iteration-count:1!important;
     transition-duration:.001ms!important}
-  .rv{opacity:1;transform:none}
+  body:not(.motionOn) .rv{opacity:1;transform:none}
   html{scroll-behavior:auto}
-  .skeleton{animation:none;background:var(--panel)}
-  .signalLexicon span{animation:none!important;opacity:0}
-  .signalLexicon span:first-child{opacity:1;filter:none;transform:none}
-  .locationStream span{animation:none!important;transform:none;padding-left:0}
-  .analysisState span{animation:none!important;opacity:0}
-  .analysisState span:first-child{opacity:1;filter:none;transform:none}
-  .dataParticle{display:none}
+  body:not(.motionOn) .skeleton{animation:none;background:var(--panel)}
+  body:not(.motionOn) .signalLexicon span{animation:none!important;opacity:0}
+  body:not(.motionOn) .signalLexicon span:first-child{opacity:1;filter:none;transform:none}
+  body:not(.motionOn) .locationStream span{animation:none!important;transform:none;padding-left:0}
+  body:not(.motionOn) .analysisState span{animation:none!important;opacity:0}
+  body:not(.motionOn) .analysisState span:first-child{opacity:1;filter:none;transform:none}
+  body:not(.motionOn) .dataParticle{display:none}
 }
+body.motionOff *,body.motionOff *::before,body.motionOff *::after{animation-duration:.001ms!important;
+  animation-iteration-count:1!important;transition-duration:.001ms!important}
+body.motionOff .rv{opacity:1;transform:none}
+body.motionOff .signalLexicon span,body.motionOff .analysisState span{opacity:0}
+body.motionOff .signalLexicon span:first-child,body.motionOff .analysisState span:first-child{opacity:1;filter:none;transform:none}
+body.motionOff .locationStream span{animation:none!important;transform:none;padding-left:0}
+body.motionOff .dataParticle{display:none}
 
 /* ------------------------------------------------------------------ footer */
 footer{border-top:1px solid var(--line);padding:46px 0 62px;color:var(--muted);font-size:13px}
@@ -737,8 +764,9 @@ footer .scanbox .v{color:var(--ink2)}
   .mobileNav{display:block}
   .scanpill{margin-left:auto}
   .grid{grid-template-columns:repeat(auto-fill,minmax(290px,1fr))}
-  .heroGrid{grid-template-columns:1fr}
-  .radarStage{justify-self:center;max-width:390px;margin-top:36px}
+  .heroGrid{grid-template-columns:1fr;row-gap:0}
+  .motionBtn{position:static;margin-top:18px}
+  .radarStage{justify-self:center;max-width:390px;margin-top:24px}
   .hlGrid{grid-template-columns:1fr}
 }
 @media(min-width:901px){
@@ -885,6 +913,7 @@ footer .scanbox .v{color:var(--ink2)}
         <div class="learningLoop rv" aria-label="Self-improving intelligence: tracks what converts, learns where leads originate, and improves every scan">
           <span>Tracks what converts</span><span>Learns lead sources</span><span>Improves every scan</span>
         </div>
+        <button class="motionBtn rv" id="motionToggle" type="button" aria-pressed="false">Play 3D motion</button>
         <div class="cta rv">
           <a class="btn p" href="#highlights">See highlights <span aria-hidden="true">&rarr;</span></a>
           <a class="btn g" href="#all">All openings</a>
@@ -905,6 +934,7 @@ footer .scanbox .v{color:var(--ink2)}
           <span class="radarSweep"></span>
           <div class="brainScan" aria-hidden="true">
             <span class="brainAxis"></span>
+            <span class="depthArc a1"></span><span class="depthArc a2"></span><span class="depthArc a3"></span>
             <span class="brainSlice s1"></span><span class="brainSlice s2"></span>
             <span class="brainSlice s3"></span><span class="brainSlice s4"></span>
             <span class="brainSlice s5"></span><span class="brainSlice s6"></span>
@@ -1504,6 +1534,23 @@ function finishSplash(){
 })();
 
 /* ---------------------------------------------------------- app install */
+const motionToggle = document.getElementById('motionToggle');
+let motionPreference = null;
+try { motionPreference = localStorage.getItem('aj-3d-motion'); } catch(e){}
+function setMotion(on){
+  document.body.classList.toggle('motionOn', on);
+  document.body.classList.toggle('motionOff', !on);
+  motionToggle.setAttribute('aria-pressed', String(on));
+  motionToggle.textContent = on ? 'Pause 3D motion' : 'Play 3D motion';
+  if (on) document.querySelectorAll('.hero .rv').forEach(el => el.classList.add('in'));
+}
+setMotion(motionPreference === 'on' || (motionPreference !== 'off' && !matchMedia('(prefers-reduced-motion:reduce)').matches));
+motionToggle.addEventListener('click', () => {
+  const on = !document.body.classList.contains('motionOn');
+  setMotion(on);
+  try { localStorage.setItem('aj-3d-motion', on ? 'on' : 'off'); } catch(e){}
+});
+
 const installApp = document.getElementById('installApp');
 const installHint = document.getElementById('installHint');
 let installPrompt = null;
